@@ -41,7 +41,7 @@ export default function App() {
   }, []);
   return (
     <View style={styles.container}>
-      <Text>Sample react native FCM</Text>
+      <Text>Sample react native FCM native yo</Text>
       <Button
         title="Press me"
         onPress={() => localNotificationService.cancelAllNotifications()}
