@@ -119,11 +119,9 @@ class FCMService {
 
   //
 
-  unregister = () => {
+  unRegister = () => {
     this.messageListener();
   };
-
-  
 }
 
 export const fcmService = new FCMService();
