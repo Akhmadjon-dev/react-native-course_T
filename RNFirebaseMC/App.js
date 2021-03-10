@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
+import {View, StyleSheet, Text, Button, Alert} from 'react-native';
 import {fcmService} from './src/FCMService';
 import {localNotificationService} from './src/LocalNotificationService';
 
@@ -39,13 +39,15 @@ export default function App() {
       localNotificationService.unregister();
     };
   }, []);
+  const handler = () => {
+    localNotificationService.cancelAllNotifications();
+    console.log('yooooo clickeeeddd');
+  };
   return (
     <View style={styles.container}>
-      <Text>Sample react native FCM native yo</Text>
-      <Button
-        title="Press me"
-        onPress={() => localNotificationService.cancelAllNotifications()}
-      />
+      <Text>Sample react native FCM native yo </Text>
+      <Text style={{color: 'red'}}>Sample react native FCM native yo </Text>
+      <Button title="Press me" onPress={handler} />
     </View>
   );
 }

@@ -31,7 +31,7 @@ class FCMService {
         }
       })
       .catch((err) => {
-        console.log('[FCMServise Permission rejected', err);
+        console.log('[FCMServise] Permission rejected', err);
       });
   };
 
@@ -45,7 +45,7 @@ class FCMService {
           console.log("User doesn't have a device token");
         }
       })
-      .catch((err) => console.log('FCMService getToken rejected', err));
+      .catch((err) => console.log('[FCMService] getToken rejected', err));
   };
 
   requestPermission = (onRegister) => {
@@ -54,14 +54,14 @@ class FCMService {
       .then(() => {
         this.getToken(onRegister);
       })
-      .catch((err) => console.log('FCMServise permission rejected', err));
+      .catch((err) => console.log('[FCMServise] permission rejected', err));
   };
 
   deleteToken = () => {
-    console.log('FCMServise token deleted');
+    console.log('[FCMServise] token deleted');
     messaging()
       .deleteToken()
-      .catch((err) => console.log('FCMService delete token error', err));
+      .catch((err) => console.log('[FCMService] delete token error', err));
   };
 
   createNotificationListener = (
@@ -72,7 +72,7 @@ class FCMService {
     // when aplication is running but in the background
 
     messaging().onNotificationOpenedApp((remoteMessage) => {
-      console.log('FCMService onNotifiationApp caused to open App');
+      console.log('[FCMService] onNotifiationApp caused to open App');
       if (remoteMessage) {
         const notification = remoteMessage.notification;
         onOpenNotification(notification);
