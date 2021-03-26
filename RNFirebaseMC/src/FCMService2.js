@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 class FCMService {
   register = (onRegister, onNotification, onOpenNotification) => {
     this.checkPermission(onRegister);
-    this.createNotificationListeners(
+    this.createNotificationListener(
       onRegister,
       onNotification,
       onOpenNotification,
@@ -42,7 +42,7 @@ class FCMService {
         if (fcmToken) {
           onRegister(fcmToken);
         } else {
-          console.log("[ FCMService ] User doesn't have a device token");
+          console.log("User doesn't have a device token");
         }
       })
       .catch((err) => console.log('[FCMService] getToken rejected', err));
@@ -54,22 +54,21 @@ class FCMService {
       .then(() => {
         this.getToken(onRegister);
       })
-      .catch((err) => console.log('[FCMServise] Request permission rejected', err));
+      .catch((err) => console.log('[FCMServise] permission rejected', err));
   };
 
   deleteToken = () => {
     console.log('[FCMServise] token deleted');
     messaging()
       .deleteToken()
-      .catch((err) => console.log('[FCMService] Delete token error', err));
+      .catch((err) => console.log('[FCMService] delete token error', err));
   };
 
-  createNotificationListeners = (
+  createNotificationListener = (
     onRegister,
     onNotification,
     onOpenNotification,
   ) => {
-    
     // when aplication is running but in the background
 
     messaging().onNotificationOpenedApp((remoteMessage) => {
