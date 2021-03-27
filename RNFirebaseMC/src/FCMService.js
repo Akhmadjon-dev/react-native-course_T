@@ -107,6 +107,7 @@ class FCMService {
         } else {
           notification = remoteMessage.notification;
         }
+        console.log(notification, 'comiiinnngggg notification')
         onNotification(notification);
       }
     });

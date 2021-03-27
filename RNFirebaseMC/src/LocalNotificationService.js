@@ -18,9 +18,7 @@ class LocalNotificationService {
         }
         notification.userInteraction = true;
         onOpenNotification(
-          Platform.OS === 'ios'
-            ? notification.data.notification
-            : notification.notification,
+          Platform.OS === 'ios' ? notification.data.item : notification.data,
         );
 
         // Only call calback if not from foreground
