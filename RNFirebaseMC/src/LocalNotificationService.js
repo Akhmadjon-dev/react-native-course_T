@@ -1,31 +1,31 @@
-import PushNotification from "react-native-push-notification";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { Platform } from "react-native";
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Platform} from 'react-native';
 
 class LocalNotificationService {
   configure = (onOpenNotification) => {
     PushNotification.configure({
       onRegister: function (token) {
-        console.log("[LocalNotificationService] onRegister: ", token);
+        console.log('[LocalNotificationService] onRegister: ', token);
       },
       onNotification: function (notification) {
         console.log(
-          "[LocalNotificationService] onNotification: ",
-          notification
+          '[LocalNotificationService] onNotification: ',
+          notification,
         );
         if (!notification?.data) {
           return;
         }
         notification.userInteraction = true;
         onOpenNotification(
-          Platform.OS === "ios"
-            ? notification.data.item
-            : notification.notification
+          Platform.OS === 'ios'
+            ? notification.data.notification
+            : notification.notification,
         );
 
         // Only call calback if not from foreground
 
-        if (Platform.OS === "ios") {
+        if (Platform.OS === 'ios') {
           // {required} Called when a remote is recieved or opened, or local notification is opened
           notification.finish(PushNotificationIOS.FetchResult.NoData);
         }
@@ -64,10 +64,10 @@ class LocalNotificationService {
 
       /* iOS and Android properties */
       ...this.buildIOSNotification(id, title, message, data, options),
-      title: title || "", // (optional)
-      message: message || "", // (required)
+      title: title || '', // (optional)
+      message: message || '', // (required)
       playSound: options.playSound || true, // (optional) default: true
-      soundName: options.soundName || "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      soundName: options.soundName || 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       userInteraction: false,
     });
   };
@@ -76,22 +76,22 @@ class LocalNotificationService {
     return {
       id: id,
       autoCancel: true,
-      largeIcon: options.largeIcon || "ic_launcher",
-      smallIcon: options.smallIcon || "ic_notification",
-      bigText: message || "",
-      subText: title || "",
+      largeIcon: options.largeIcon || 'ic_launcher',
+      smallIcon: options.smallIcon || 'ic_notification',
+      bigText: message || '',
+      subText: title || '',
       vibrate: options.vibrate || true,
       vibration: options.vibration || 300,
-      priority: options.priority || "high",
-      importance: options.importance || "high",
+      priority: options.priority || 'high',
+      importance: options.importance || 'high',
       data: data,
     };
   };
 
   buildIOSNotification = (id, title, message, data = {}, options = {}) => {
     return {
-      alertAction: options.alertAction || "view",
-      category: options.category || "",
+      alertAction: options.alertAction || 'view',
+      category: options.category || '',
       userInfo: {
         id,
         item: data,
@@ -100,7 +100,7 @@ class LocalNotificationService {
   };
 
   cancelAllLocalNotifications = () => {
-    if (Platform.OS === "ios") {
+    if (Platform.OS === 'ios') {
       PushNotificationIOS.removeAllDeliveredNotifications();
     } else {
       PushNotification.cancelAllLocalNotifications();
@@ -110,10 +110,10 @@ class LocalNotificationService {
 
   removeDeliveredNotificationByID = (notificationId) => {
     console.log(
-      "[LocalNotificationService] removeDeliveredNotficationByID: ",
-      notificationId
+      '[LocalNotificationService] removeDeliveredNotficationByID: ',
+      notificationId,
     );
-    PushNotification.cancelLocalNotifications({ id: `${notificationId}` });
+    PushNotification.cancelLocalNotifications({id: `${notificationId}`});
   };
 }
 

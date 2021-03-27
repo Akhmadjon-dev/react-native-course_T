@@ -8,7 +8,7 @@ class FCMService {
       onRegister,
       onNotification,
       onOpenNotification,
-    );
+    ); 
   };
 
   registerAppWithFCM = async () => {
